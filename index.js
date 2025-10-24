@@ -17,6 +17,7 @@ app.use(express.json());
 
 // Configurando a conexão com o MongoDB
 const MongoClient = mongodb.MongoClient;
+const ObjectId = mongodb.ObjectId;
 const ConStr = process.env.DB_CONNECTION_STRING;
 const client = new MongoClient(ConStr);
 
@@ -65,11 +66,57 @@ app.post('/clientes', async (req, res) => {
   try {
     const novoCliente = req.body;
     novoCliente.dataCadastro = new Date();
-    
+
     const resultado = await collection.insertOne(novoCliente);
     res.status(201).json({ message: 'Cliente criado com sucesso', id: resultado.insertedId });
   } catch (error) {
     console.error('Erro ao criar cliente:', error);
     res.status(500).json({ message: 'Erro ao criar cliente' });
   }
+});
+
+app.delete('/clientes/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const query = { _id: new ObjectId(id) };
+
+    const resultado = await collection.deleteOne(query);
+
+    if (resultado.deletedCount === 1) {
+      res.status(200).json({ message: 'Cliente deletado com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Cliente não encontrado' });
+    }
+  } catch (error) {
+    console.error('Erro ao deletar cliente:', error);
+    res.status(500).json({ message: 'Erro ao deletar cliente' });
+  }
+});
+
+app.put('/clientes/:id', async (req, res) => {
+    try {
+        // Url ID
+        const id = req.params.id;
+        // Novos dados no corpo da requisição
+        const dadosAtualizados = req.body;
+        // Criando a query para encontrar o documento pelo ID
+        const query = { _id: new ObjectId(id) };
+        // Criando a operacao de atualização
+        const updateOperation = {
+            $set: dadosAtualizados
+        };
+        // Executando a atualização
+        const resultado = await collection.updateOne(query, updateOperation);
+        // Verificando se a modificação foi bem sucedida
+        if (resultado.matchedCount === 1) {
+            res.status(200).json({ message: 'Cliente atualizado com sucesso' });
+        }
+        else {
+            res.status(404).json({ message: 'Cliente não encontrado' });
+        }
+    } catch (error) {
+        console.error('Erro ao atualizar cliente:', error);
+        res.status(500).json({ message: 'Erro ao atualizar cliente' });
+    }
 });

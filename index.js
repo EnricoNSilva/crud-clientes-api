@@ -100,6 +100,7 @@ app.put('/clientes/:id', async (req, res) => {
         const id = req.params.id;
         // Novos dados no corpo da requisição
         const dadosAtualizados = req.body;
+        delete dadosAtualizados._id; // Remove o campo _id do objeto
         // Criando a query para encontrar o documento pelo ID
         const query = { _id: new ObjectId(id) };
         // Criando a operacao de atualização

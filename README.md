@@ -3,7 +3,7 @@
 Esta é a API RESTful (backend) para o sistema de cadastro de clientes, construída com Node.js, Express e MongoDB. Ela foi desenvolvida como parte de um treinamento full-stack.
 
 Esta API foi feita para ser consumida pelo frontend em Angular, que está disponível neste repositório:
-**➡️ Repositório do Frontend (Angular): [https://github.com/EnricoNSilva/CRUD-Clientes](https://github.com/EnricoNSilva/CRUD-Clientes)**
+**➡️ Repositório do Frontend (Angular): [https://github.com/EnricoNSilva/CRUD-Clientes](https://github.com/EnricoNSilva/Crud-Clientes-Frontend)**
 
 ---
 

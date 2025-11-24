@@ -121,3 +121,5 @@ app.put('/clientes/:id', async (req, res) => {
         res.status(500).json({ message: 'Erro ao atualizar cliente' });
     }
 });
+
+module.exports = app;
